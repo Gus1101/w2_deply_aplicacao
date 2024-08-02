@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from typing import List, Dict
 
 produtos: List[Dict[str, any]] = [
@@ -34,3 +34,10 @@ def hello_world():
 @app.get("/lista_de_produtos")
 def lista_de_produtos():
 	return produtos
+
+@app.get("/lista_de_produtos/{id}")
+def buscar_produto(id: int):
+    for produto in produtos:
+        if produto["id"] == id:
+            return produto
+    raise HTTPException(status_code=404, detail="Produto não encontrado")
