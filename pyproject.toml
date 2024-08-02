@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "w2-deploy"
+version = "0.1.0"
+description = ""
+authors = ["Gus1101 <augustosantosb60@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+uvicorn = "^0.30.4"
+fastapi = "^0.111.1"
+taskipy = "^1.13.0"
+pytest = "^8.3.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.taskipy.tasks]
+run = "poetry run uvicorn main:app --reload"
+test = "poetry run python -m pytest "
+kill = "kill -9 $(lsof -t -i:8000)"
