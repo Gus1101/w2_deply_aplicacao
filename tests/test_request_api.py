@@ -1,6 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-from main import *
+from main import app
 
 client = TestClient(app)
 
@@ -33,3 +33,14 @@ def test_request_busca_produto_inexistente_status_code():
 def test_request_busca_produto_existente_status_code():
 	response = client.get("/lista_de_produtos/1")
 	assert response.status_code == 200
+
+@pytest.mark.unit
+def test_request_busca_primeiro_produto():
+	request = client.get("/lista_de_produtos/1")
+	assert request.json() == {
+		"id":1,
+		"nome":"Smartphone",
+		"descricao":"um telefone inteligente",
+		"preco":1500.0,
+		"disponivel":False,
+	}
