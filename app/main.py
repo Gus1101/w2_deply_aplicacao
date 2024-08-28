@@ -1,43 +1,22 @@
-from fastapi import FastAPI, HTTPException
-from typing import List, Dict
-
-produtos: List[Dict[str, any]] = [
-	{
-		"id":1,
-		"nome":"Smartphone",
-		"descricao":"um telefone inteligente",
-		"preco":1500.0,
-		"disponivel":False,
-	},
-	{
-		"id":2,
-		"nome":"Notebook",
-		"descricao":"Um computador portatil",
-		"preco":3500.0,
-		"disponivel": False,
-	},
-    {
-        "id":3,
-		"nome":"Tablet",
-        "descricao":"Um celular maior",
-        "preco":4000.0,
-        "disponivel": False,
-	}
-]
+from fastapi import FastAPI
+from data.data import Produtos
+from app.schema import ProdutosSchema
 
 app = FastAPI()
+produtos = Produtos()
 
 @app.get("/")
 def hello_world():
     return {"Olá":"Mundo"}
 
-@app.get("/lista_de_produtos")
+@app.get("/lista_de_produtos", response_model=list[ProdutosSchema])
 def lista_de_produtos():
-	return produtos
+	return produtos.lista_de_produtos()
 
-@app.get("/lista_de_produtos/{id}")
-def buscar_produto(id: int):
-    for produto in produtos:
-        if produto["id"] == id:
-            return produto
-    raise HTTPException(status_code=404, detail="Produto não encontrado")
+@app.get("/lista_de_produtos/{id}", response_model=ProdutosSchema)
+def busca_um_produto(id: int):
+      return produtos.buscar_produto(id)
+
+@app.post("/produtos", response_model=ProdutosSchema)
+def incluir_produto(produto: ProdutosSchema):
+      produtos.adicionar_produto(produto)
