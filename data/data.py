@@ -38,7 +38,7 @@ class Produtos:
 		raise HTTPException(status_code=404, detail="Produto não encontrado")
 	
 	def adicionar_produto(self, produto):
-		self.produtos.append(produto.dict())
+		self.produtos.append(produto)
 		return produto
 	
 	def deletar_produto(self, id):
