@@ -40,3 +40,7 @@ class Produtos:
 	def adicionar_produto(self, produto):
 		self.produtos.append(produto.dict())
 		return produto
+	
+	def deletar_produto(self, id):
+		self.produtos = [produto for produto in self.produtos if produto["id"] != id]
+		return self.produtos

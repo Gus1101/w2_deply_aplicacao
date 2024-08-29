@@ -44,3 +44,8 @@ def test_request_busca_primeiro_produto():
 		"preco":1500.0,
 		"disponivel":False,
 	}
+
+@pytest.mark.unit
+def test_request_deletar_produto_status_code():
+	request = client.delete("/deletar_produto/3")
+	assert request.status_code == 200
