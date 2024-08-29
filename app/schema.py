@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, PositiveFloat, PositiveInt
 
 class ProdutosSchema(BaseModel):
-    id : int
+    id : PositiveInt
     nome : str
     descricao : str
-    preco : float
+    preco : PositiveFloat
     disponivel : bool

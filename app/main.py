@@ -19,4 +19,8 @@ def busca_um_produto(id: int):
 
 @app.post("/produtos", response_model=ProdutosSchema)
 def incluir_produto(produto: ProdutosSchema):
-      produtos.adicionar_produto(produto)
+      produtos.adicionar_produto(produto.model_dump())
+
+@app.delete("/deletar_produto/{id}")
+def deletar_produto(id: int):
+      produtos.deletar_produto(id) 
